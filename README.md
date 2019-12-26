@@ -5,11 +5,30 @@
 
 ------
 
-### Actuator
+## Regular Business Service
+
+Default ports
+
+| Port Number | Service                    |
+| ----------- | -------------------------- |
+| 8761        | Discovery Service (Eureka) |
+|             |                            |
+|             |                            |
+
+#### Configuration
+
+There are two ways to retrieve the application configuration from  Config Service:
+
+1. specify Config Service URL:  `spring.cloud.config.uri=http://localhost:8888`
+2. to use Discovery Service to locate Config Server.
+
+If you prefer to use Discovery Service to locate the Config Server, you can do so by setting `spring.cloud.config.discovery.enabled=true` (the default is `false`). The result of doing so is that client applications all need a `bootstrap.yml` (or an environment variable) with the appropriate discovery configuration.
+
+
+
+#### Actuator
 
 Spring Boot includes a number of additional features to help you monitor and manage your application when you push it to production. You can choose to manage and monitor your application by using HTTP endpoints or with JMX. Auditing, health, and metrics gathering can also be automatically applied to your application.
-
-
 
 To add the actuator to a Maven based project, add the following ‘Starter’ dependency:
 
@@ -47,7 +66,7 @@ logging.pattern.file=%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${P
 
 
 
-### Eureka
+## Eureka 
 
 Default port:  http://localhost:8761/
 
@@ -69,3 +88,73 @@ Also, specifying an IP address can be done by
 eureka.instance.ip-address=IP_OF_MACHINE_ON_WHICH_RUNNING
 ```
 
+
+
+## Config Service
+
+##### Using GIT Backend
+
+By default, the Config Service uses a Git backend.   It can be configured with:
+
+```properties
+spring.cloud.config.server.git.uri=file:///D:/config-repo
+```
+
+or
+
+```properties
+spring.cloud.config.server.git.uri=https://example.com/my/repo
+```
+
+You can control how often the config server will fetch updated configuration data from your Git backend by using `spring.cloud.config.server.git.refreshRate`. The value of this property is specified in seconds. By default the value is 0, meaning the config server will fetch updated configuration from the Git repo every time it is requested.
+
+##### Using File System Backend
+
+There is also a “native” profile in the Config Server that does not use Git but loads the config files from the local classpath or file system (any static URL). Here is a configuration sample for the File System backend:
+
+```properties
+spring.profiles.active=native
+spring.cloud.config.server.native.searchLocations=file://D:/my_config
+```
+
+
+
+##### Other Types  of Backends
+
+There are a bunch of other types of possible backends: Vault , JDBC.   See  [this](https://cloud.spring.io/spring-cloud-config/multi/multi__spring_cloud_config_server.html) for more information.
+
+
+
+##### Endpoint URLs
+
+The following endpoints are accessible for any configuration 
+
+```
+/{application}/{profile}
+/{application}-{profile}.yml
+/{application}-{profile}.properties
+```
+
+
+
+On top of that, the *Git*-backed configuration provides the following endpoints:
+
+```
+/{application}/{profile}/{git_branch}
+/{git_branch}/{application}-{profile}.yml
+/{git_branch}/{application}-{profile}.properties
+```
+
+where, 
+
+*{application}*  - is the client's application name (required)
+
+*{profile}*  - is the client's current active application profile (required, use 'default' if unknown)
+
+
+
+*Note:*  the Config Service provides the latest value from the backend by request, but the client needs to be informed about this change, so it could retrieve it from the  Config Service.  There are a few ways to do that:
+
+1. Manually trigger a refresh event with Spring Boot Actuator POST (***/actuator/refresh***)
+2. Using webhooks (spring-cloud-config-monitor). It adds **/monitor** endpoint which could be triggered by Git server providers such as GitHub or Bitbucket.
+3. Using Spring Cloud Bus (witch integrates with RabbitMQ or Kafka).
