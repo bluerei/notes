@@ -4,3 +4,4 @@ https://dev.to/
 
 https://habr.com/
 
+https://golangbot.com/concurrency/
