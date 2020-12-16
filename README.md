@@ -20,7 +20,7 @@ Hooks up to GitHub or GitLab or Bitbucket and automatically makes your build and
 
 [Vercel](https://vercel.com/)
 
-Similar to Netlify, hooks up to your GitHub or GitLab or Bitbucket, makes builds and deploys  to https://project.username.now.sh/   (you may easyliy to set up your own domain name).
+Similar to Netlify, hooks up to your GitHub or GitLab or Bitbucket, makes builds and deploys  to https://project.username.now.sh/   (you may easily to set up your own domain name).
 
 On top of it, it has a bunch of project templates (Angular, Next.js, Vue.js, Docusaurus and many others).
 
