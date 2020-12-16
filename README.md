@@ -1,9 +1,9 @@
 # Notes
 
 
-- [Microservices](Microservices\readme.md) 
--  [Frontend](Frontend\readme.md) 
-- [Smart Home](Smart Home\readme.md) 
+- [Microservices](Microservices/readme.md) 
+-  [Frontend](Frontend/readme.md) 
+- [Smart Home](Smart Home/readme.md) 
 - [Something to read](reading.md) 
 - [Go](Go/readme.md)
 - [Python](Python/Readme.md)
