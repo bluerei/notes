@@ -1,12 +1,13 @@
 # Notes
 
 
-- [Microservices](Microservices\Spring Boot Notes.md) 
+- [Microservices](Microservices\readme.md) 
 -  [Frontend](Frontend\readme.md) 
-- [Smart Home](Smart Home\Useful Links.md) 
+- [Smart Home](Smart Home\readme.md) 
 - [Something to read](reading.md) 
-- [Go](Go/go.md)
+- [Go](Go/readme.md)
 - [Python](Python/Readme.md)
+- [Psychology](psychology/readme.md)
 
 ------
 
